@@ -17,6 +17,7 @@
 		<java.version>20</java.version>
 		<dozer.version>6.4.0</dozer.version>
 		<modelMapper.version>3.1.1</modelMapper.version>
+		<mysql.version>8.0.33</mysql.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -32,8 +33,28 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.33</version>
+			<version>${mysql.version}</version>
 			<scope>runtime</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-yaml</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-mysql</artifactId>
 		</dependency>
 		
 		<dependency>

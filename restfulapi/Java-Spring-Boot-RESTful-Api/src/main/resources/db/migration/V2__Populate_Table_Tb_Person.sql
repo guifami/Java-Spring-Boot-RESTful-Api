@@ -1,0 +1,1 @@
+INSERT INTO `tb_person` VALUES (1,'Guilherme','Ruiz da Silva','Sao Paulo','Male'),(2,'Rafael','Ruiz da Silva','Sao Paulo','Male')
