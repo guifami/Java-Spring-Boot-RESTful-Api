@@ -11,6 +11,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import com.jsprestfulapi.controllers.PersonController;
 import com.jsprestfulapi.data.vo.v1.PersonVO;
+import com.jsprestfulapi.exceptions.RequiredObjectIsNullException;
 import com.jsprestfulapi.exceptions.ResourceNotFoundException;
 import com.jsprestfulapi.mapper.DozerMapper;
 import com.jsprestfulapi.model.Person;
@@ -47,6 +48,8 @@ public class PersonServices {
 	
 	public PersonVO create(PersonVO person) {
 		
+		if(person == null) throw new RequiredObjectIsNullException();
+		
 		logger.info("Creating one PersonVO!");
 		
 		var entity = DozerMapper.parseObject(person, Person.class);
@@ -56,6 +59,8 @@ public class PersonServices {
 	}
 	
 	public PersonVO update(PersonVO person) {
+		
+		if(person == null) throw new RequiredObjectIsNullException();
 		
 		logger.info("Updating one PersonVO!");
 		
