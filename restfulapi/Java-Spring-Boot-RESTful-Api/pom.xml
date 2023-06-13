@@ -18,6 +18,7 @@
 		<dozer.version>6.4.0</dozer.version>
 		<modelMapper.version>3.1.1</modelMapper.version>
 		<mysql.version>8.0.33</mysql.version>
+		<springdoc.version>2.1.0</springdoc.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -50,6 +51,12 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-yaml</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>${springdoc.version}</version>
 		</dependency>
 		
 		<dependency>
