@@ -16,7 +16,7 @@ public class OpenApiConfig {
 				.info(new Info()
 					.title("RESTful API with Java 17 and Spring Boot 3")
 					.version("v1")
-					.description("Glória do REST")
+					.description("")
 					.termsOfService("")
 					.license(
 						new License()
