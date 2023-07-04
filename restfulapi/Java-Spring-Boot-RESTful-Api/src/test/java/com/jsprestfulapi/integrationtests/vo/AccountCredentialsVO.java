@@ -1,7 +1,10 @@
-package com.jsprestfulapi.data.vo.v1.security;
+package com.jsprestfulapi.integrationtests.vo;
 
 import java.io.Serializable;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class AccountCredentialsVO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -9,7 +12,7 @@ public class AccountCredentialsVO implements Serializable{
 	private String username;
 	private String password;
 	
-	public AccountCredentialsVO() {}
+	public AccountCredentialsVO(){}
 	
 	public AccountCredentialsVO(String username, String password) {
 		this.username = username;
