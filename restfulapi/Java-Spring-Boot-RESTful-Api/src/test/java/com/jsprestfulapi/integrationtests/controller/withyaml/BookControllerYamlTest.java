@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -18,13 +17,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-
 import com.jsprestfulapi.configs.TestConfigs;
 import com.jsprestfulapi.integrationtests.controller.withyaml.mapper.YMLMapper;
 import com.jsprestfulapi.integrationtests.testcontainers.AbstractIntegrationTest;
 import com.jsprestfulapi.integrationtests.vo.AccountCredentialsVO;
 import com.jsprestfulapi.integrationtests.vo.BookVO;
 import com.jsprestfulapi.integrationtests.vo.TokenVO;
+import com.jsprestfulapi.integrationtests.vo.pagedmodels.PagedModelBook;
+
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.EncoderConfig;
 import io.restassured.config.RestAssuredConfig;
@@ -218,38 +218,39 @@ public class BookControllerYamlTest extends AbstractIntegrationTest {
                     .spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_YML)
 				.accept(TestConfigs.CONTENT_TYPE_YML)
+				.queryParams("page", 0, "size", 10, "direction", "asc")
                     .when()
                     .get()
                 .then()
                     .statusCode(200)
                         .extract()
                         .body()
-                        .as(BookVO[].class, objectMapper); 
+                        .as(PagedModelBook.class, objectMapper); 
 
 
-        List<BookVO> content = Arrays.asList(response);
+        List<BookVO> books = response.getContent();
 
-        BookVO foundBookOne = content.get(0);
+        BookVO foundBookOne = books.get(0);
         
         assertNotNull(foundBookOne.getId());
         assertNotNull(foundBookOne.getTitle());
         assertNotNull(foundBookOne.getAuthor());
         assertNotNull(foundBookOne.getPrice());
         assertTrue(foundBookOne.getId() > 0);
-        assertEquals("Working effectively with legacy code", foundBookOne.getTitle());
-        assertEquals("Michael C. Feathers", foundBookOne.getAuthor());
-        assertEquals(49.00, foundBookOne.getPrice());
+        assertEquals("Big Data: como extrair volume, variedade, velocidade e valor da avalanche de informação cotidiana", foundBookOne.getTitle());
+        assertEquals("Viktor Mayer-Schonberger e Kenneth Kukier", foundBookOne.getAuthor());
+        assertEquals(54.00, foundBookOne.getPrice());
         
-        BookVO foundBookFive = content.get(4);
+        BookVO foundBookFive = books.get(4);
         
         assertNotNull(foundBookFive.getId());
         assertNotNull(foundBookFive.getTitle());
         assertNotNull(foundBookFive.getAuthor());
         assertNotNull(foundBookFive.getPrice());
         assertTrue(foundBookFive.getId() > 0);
-        assertEquals("Code complete", foundBookFive.getTitle());
-        assertEquals("Steve McConnell", foundBookFive.getAuthor());
-        assertEquals(58.0, foundBookFive.getPrice());
+        assertEquals("Domain Driven Design", foundBookFive.getTitle());
+        assertEquals("Eric Evans", foundBookFive.getAuthor());
+        assertEquals(92.0, foundBookFive.getPrice());
     }
      
     private void mockBook() {
