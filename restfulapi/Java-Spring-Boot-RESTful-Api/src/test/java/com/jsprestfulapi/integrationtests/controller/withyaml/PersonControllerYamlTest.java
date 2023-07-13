@@ -312,6 +312,49 @@ PersonVO foundPersonOne = people.get(0);
 	
 	@Test
 	@Order(7)
+	public void testFindByName() throws JsonMappingException, JsonProcessingException {
+		
+		var wrapper = given().spec(specification)
+				.config(
+						RestAssuredConfig
+							.config()
+							.encoderConfig(EncoderConfig.encoderConfig()
+								.encodeContentTypeAs(
+									TestConfigs.CONTENT_TYPE_YML,
+									ContentType.TEXT)))
+				.contentType(TestConfigs.CONTENT_TYPE_YML)
+				.accept(TestConfigs.CONTENT_TYPE_YML)
+					.pathParam("firstName", "be")
+					.queryParams("page", 0, "size", 10, "direction", "asc")
+						.when()
+						.get("findPersonsByName/{firstName}")
+					.then()
+						.statusCode(200)
+							.extract()
+							.body()
+							.as(PagedModelPerson.class, objectMapper);
+		
+		var people = wrapper.getContent();
+		
+		PersonVO foundPersonOne = people.get(0);
+		
+		assertNotNull(foundPersonOne.getId());
+		assertNotNull(foundPersonOne.getFirstName());
+		assertNotNull(foundPersonOne.getLastName());
+		assertNotNull(foundPersonOne.getAddress());
+		assertNotNull(foundPersonOne.getGender());
+		
+		assertEquals(722, foundPersonOne.getId());
+		
+		assertEquals("Abbe", foundPersonOne.getFirstName());
+		assertEquals("Quilleash", foundPersonOne.getLastName());
+		assertEquals("1 South Avenue", foundPersonOne.getAddress());
+		assertEquals("Female", foundPersonOne.getGender());
+		assertTrue(foundPersonOne.getEnabled());
+	}
+	
+	@Test
+	@Order(8)
 	public void testFindAllWithoutToken() throws JsonMappingException, JsonProcessingException {
 		
 		RequestSpecification specificationWithoutToken = new RequestSpecBuilder()
